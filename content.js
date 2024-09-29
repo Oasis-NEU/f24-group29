@@ -14,6 +14,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     datePosted: getDatePosted().textContent,
     jobLocation: getJobLocation().textContent,
     jobDescription: getJobDescription().textContent,
+    additionalDetails: getAdditionalDetails(),
   };
 
   console.log(response);
@@ -46,4 +47,31 @@ function getJobDescription() {
   return document.querySelector(
     "div.text-overflow.space-top-lg.text-gray.p-group.field-widget-tinymce"
   );
+}
+
+function getAdditionalDetails() {
+  containers = getAdditionalDetailsContainers();
+  return containers.map((container) => {
+    return {
+      name: getAdditionalDetailName(container),
+      value: getAdditionalDetailValue(container),
+    };
+  });
+}
+
+function getAdditionalDetailsContainers() {
+  containers = document.querySelectorAll(".form-static-list");
+  return Array.from(containers);
+}
+
+function getAdditionalDetailName(container) {
+  return container.querySelector(
+    ".field-label.field-label-readonly.ng-star-inserted"
+  ).textContent;
+}
+
+function getAdditionalDetailValue(container) {
+  return container.querySelector(
+    ".field-widget.widget-readonly.field-widget-text"
+  ).textContent;
 }
