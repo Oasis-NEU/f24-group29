@@ -37,7 +37,6 @@ function WindowCategories() {
     return (
         <div id="window-category-container">
             <button className="category-btn" id="info-btn">Info</button>
-            <div id="vertical-divider"></div>
             <button className="category-btn" id="notes-btn">Notes</button>
         </div>
     )
@@ -50,7 +49,14 @@ function WindowInfo({jobPay, jobDeadline, jobDateUpdated}) {
     <p className="standard-text">Pay Range: {jobPay}</p>
     <span id="status-container">
     <p className="standard-text">Status:</p>
-    <input type="range" id="status-input" />
+    <select id="status-input">
+        <option value="Pick a status">Pick a status</option>
+        <option value="Applied">Applied</option>
+        <option value="Screened">Screened</option>
+        <option value="Interviewing">Interviewing</option>
+        <option value="Accepted">Accepted</option>
+        <option value="Rejected">Rejected</option>
+    </select>
     </span>
     <p className="standard-text">Date Applied: {jobDateUpdated}</p>
     <p className="standard-text">Deadline: {jobDeadline}</p>
@@ -69,8 +75,8 @@ function WindowBtns() {
 
     return(
         <span id="window-btns-container">
-            <button id="edit-button">Edit</button>
-            <button id="update-button">Update</button>
+            <button className="window-btn" id="edit-button">Edit</button>
+            <button className="window-btn" id="update-button">Update</button>
         </span>
     )
 }

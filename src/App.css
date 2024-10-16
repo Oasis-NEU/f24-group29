@@ -1,6 +1,4 @@
-div, span {
-  border: 1px solid black;
-}
+
 
 #root {
   max-width: 1280px;
@@ -85,6 +83,10 @@ div, span {
   border: 1px solid orange;
 }
 
+#window-header-container {
+  border-bottom: 1px solid black;
+}
+
 #window-header-span {
   display: flex;
   flex-direction: row;
@@ -123,4 +125,19 @@ align-items: center;
   max-width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
+}
+
+#window-btns-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.window-btn {
+  font-size: 1.25rem;
+  width: 12rem;
+  height: 4rem;
+  background-color: blue;
+  color: white;
 }
