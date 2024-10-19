@@ -1,7 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { supabase } from '../assets/supabase-client'
 
 
 export default function CardWindow({ jobTitle, jobCompany, jobPay, jobDeadline, jobType, jobStatus, jobLocation, jobDateUpdated }) {
+
+    const [isCardClicked, setIsCardClicked] = useState(false);
+
+    useEffect(() => {
+        // code here to call row data based off id...
+    });
 
     return (
         <div id="card-window-parent-container">
@@ -11,9 +18,10 @@ export default function CardWindow({ jobTitle, jobCompany, jobPay, jobDeadline, 
                 jobDeadline={"10/25/24"}
                 jobPay={"$45-$61/hr"}
                 jobType={"Internship"}
-                jobStatus={"Applied"} />
+                jobStatus={"Applied"}
+                setIsCardClicked={setIsCardClicked} />
             <div className="vertical-spacer" />
-            <JobWindow
+            {isCardClicked && <JobWindow
                 jobTitle={"Software Engineer"}
                 jobCompany={"Northeastern University"}
                 jobLocation={"Cambridge, MA"}
@@ -22,17 +30,19 @@ export default function CardWindow({ jobTitle, jobCompany, jobPay, jobDeadline, 
                 jobType={"Internship"}
                 jobStatus={"Applied"}
                 jobDateUpdated={"10/12/24"}
-                 />
+                setIsCardClicked={setIsCardClicked}
+                 />}
         </div>
     )
 }
 
 // CARD COMPONENTS STARTING HERE
 
-function Card({ jobTitle, jobCompany, jobPay, jobDeadline, jobType, jobStatus }) {
+function Card({ jobTitle, jobCompany, jobPay, jobDeadline, jobType, jobStatus, setIsCardClicked }) {
 
     return (
-        <div id="card-container">
+        <div id="card-container"
+        onClick={() => setIsCardClicked(true)}>
             <CardInfo>
                 <CardHeader
                     jobCompany={jobCompany}
@@ -93,7 +103,7 @@ function CardExtraInfo({ jobType, jobPay, jobDeadline }) {
 // WINDOW COMPONENTS STARTING HERE
 
 
-function JobWindow({ jobTitle, jobCompany, jobLocation, jobPay, jobDeadline, jobDateUpdated, jobType }) {
+function JobWindow({ jobTitle, jobCompany, jobLocation, jobPay, jobDeadline, jobDateUpdated, jobType, setIsCardClicked }) {
 
     const [isNotesClicked, setIsNotesClicked] = useState(false);
 
@@ -103,7 +113,8 @@ function JobWindow({ jobTitle, jobCompany, jobLocation, jobPay, jobDeadline, job
                 jobTitle={jobTitle}
                 jobCompany={jobCompany}
                 jobLocation={jobLocation}
-                jobType={jobType} />
+                jobType={jobType}
+                setIsCardClicked={setIsCardClicked} />
             <WindowCategories 
             setIsNotesClicked={setIsNotesClicked} />
             {isNotesClicked ? <WindowNotes /> :
@@ -116,10 +127,15 @@ function JobWindow({ jobTitle, jobCompany, jobLocation, jobPay, jobDeadline, job
     )
 }
 
-function WindowHeader({ jobTitle, jobCompany, jobLocation, jobType }) {
+function WindowHeader({ jobTitle, jobCompany, jobLocation, jobType, setIsCardClicked }) {
 
     return (
         <div id="window-header-container">
+            <div id="close-window-container">
+                <button 
+                    id="close-window-btn" 
+                    onClick={() => setIsCardClicked(false)}>X</button>
+                    </div>
             <h1 className="large-header">{jobTitle}</h1>
             <span id="window-header-span">
                 <h3 className="sub-header">{jobCompany}</h3>
