@@ -1,14 +1,24 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../assets/supabase-client'
+import { supabase } from '../supabase-client'
 
 
 export default function CardWindow({ jobTitle, jobCompany, jobPay, jobDeadline, jobType, jobStatus, jobLocation, jobDateUpdated }) {
 
     const [isCardClicked, setIsCardClicked] = useState(false);
 
-    useEffect(() => {
-        // code here to call row data based off id...
-    });
+        async function fetchJob(appId) {
+            await supabase
+            .from('JobApplications')
+            .select('*')
+            .eq(id, appId)
+            .single()
+        };
+
+        async function updateJob(id, updatedFields) {
+            await supabase
+            .from('JobApplications')
+            .update(updatedFields)
+        }
 
     return (
         <div id="card-window-parent-container">
