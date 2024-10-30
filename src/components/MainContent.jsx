@@ -1,11 +1,11 @@
-// MainContent.js
 import React from 'react';
+import Dashboard from '../Dashboard'; 
 
 const MainContent = ({ selectedTab }) => {
   const renderContent = () => {
     switch (selectedTab) {
       case 'dashboard':
-        return <h1>Dashboard Content</h1>;
+        return <Dashboard />; 
       case 'myJobs':
         return <h1>My Jobs Content</h1>;
       case 'resources':
