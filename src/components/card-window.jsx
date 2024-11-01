@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../supabase-client'
+import { supabase } from '/supabase-client'
 
 
 export default function CardWindow({ jobTitle, jobCompany, jobPay, jobDeadline, jobType, jobStatus, jobLocation, jobDateUpdated }) {
@@ -10,15 +10,17 @@ export default function CardWindow({ jobTitle, jobCompany, jobPay, jobDeadline, 
             await supabase
             .from('JobApplications')
             .select('*')
-            .eq(id, appId)
+            .eq('id', appId)
             .single()
         };
 
-        async function updateJob(id, updatedFields) {
+        async function updateJob(appId, updatedFields) {
             await supabase
             .from('JobApplications')
             .update(updatedFields)
-        }
+            .eq('id', appId)
+            .single()
+        };
 
     return (
         <div id="card-window-parent-container">
