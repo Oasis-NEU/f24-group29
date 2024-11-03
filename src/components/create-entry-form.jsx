@@ -1,18 +1,29 @@
 import { useState } from 'react';
-import { supabase } from '/supabase-client'
-import { handleChange } from '../hooks/fetch-data';
-import { handleSubmit } from '../hooks/fetch-data';
+import { supabase } from '/supabase-client';
 
-export default function CreateEntryForm({errorMessage, setErrorMessage, successMessage, setSuccessMessage}) {
+export default function CreateEntryForm() {
+    
+    const [formData, setFormData] = useState({
+        title: '',
+        company: '',
+        location: '',
+        type: '',
+        deadline: '',
+        payPerHour: '',
+        status: '',
+        annualPay: '',
+    });
+    
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
 
-    // updates fields when user types in data & on screen
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+        // updates fields when user types in data & on screen
+        const handleChange = (e) => {
+            const { name, value } = e.target;
+            setFormData({ ...formData, [name]: value })
+        };
 
-    // onSubmit function for form
-    const handleSubmit = async (e) => {
+    const handleCreateEntrySubmit = async (e) => {
 
         // Prevent page reload
         e.preventDefault(); 
@@ -33,6 +44,7 @@ export default function CreateEntryForm({errorMessage, setErrorMessage, successM
                     pay_per_hour: payPerHour,
                     annual_pay: annualPay }]);
 
+
             if (error) throw error; // Handle error
 
             setSuccessMessage('Job application submitted successfully!');
@@ -48,6 +60,7 @@ export default function CreateEntryForm({errorMessage, setErrorMessage, successM
                 status: '',
                 annualPay: '',
             });
+
         } catch (error) {
             console.error('Error inserting data:', error);
             setErrorMessage(`Failed to submit job application. Please try again. ${error}`);
@@ -56,7 +69,7 @@ export default function CreateEntryForm({errorMessage, setErrorMessage, successM
     };
 
     return(
-        <form id="create-entry-form" onSubmit={handleSubmit}>
+        <form id="create-entry-form" onSubmit={handleCreateEntrySubmit}>
             <h1>Create a job entry</h1>
             <label>Job Title</label>
                 <input 

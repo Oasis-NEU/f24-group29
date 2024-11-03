@@ -1,12 +1,32 @@
 import { useState } from 'react';
 import { supabase } from '/supabase-client';
+import { handleUpdateEntrySubmit } from '../hooks/fetch-data';
 
-export default function UpdateEntryForm() {
+export default function UpdateEntryForm({ appId }) {
 
+    const [formData, setFormData] = useState({
+        title: '',
+        company: '',
+        location: '',
+        type: '',
+        deadline: '',
+        payPerHour: '',
+        status: '',
+        annualPay: '',
+    });
+    
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
+
+    const [jobID, setJobID] = useState(null);
+
+    const handleSubmit = (e) => {
+        handleUpdateEntrySubmit(e, appId)
+    };
 
 return(
     <form id="update-entry-form" onSubmit={handleSubmit}>
-        <h1>Create a job entry</h1>
+        <h1>Update Job Entry</h1>
             <label>Job Title</label>
                 <input 
                 type="text" 
