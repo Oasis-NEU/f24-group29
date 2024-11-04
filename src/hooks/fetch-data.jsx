@@ -1,8 +1,12 @@
 import { supabase } from '/supabase-client';
 
+    // TO DO
+    // 1. Initialize unique ID in handleCreateEntrySubmit & set to state
+    // 2. use that ID to update specific row in handleUpdateEntrySubmit
+    // FORM STATUS: WORKING
 
     // onSubmit function for CREATE FORM
-    export const handleCreateEntrySubmit = async (e) => {
+    export const handleCreateEntrySubmit = async (e, formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage, jobId, setJobId) => {
 
         // Prevent page reload
         e.preventDefault(); 
@@ -23,8 +27,6 @@ import { supabase } from '/supabase-client';
                     pay_per_hour: payPerHour,
                     annual_pay: annualPay }]);
 
-                    const generatedID = data[0].id;
-                    setEntryID(generatedID);
 
             if (error) throw error; // Handle error
 
@@ -41,7 +43,7 @@ import { supabase } from '/supabase-client';
                 status: '',
                 annualPay: '',
             });
-            console.log(generatedID);
+
         } catch (error) {
             console.error('Error inserting data:', error);
             setErrorMessage(`Failed to submit job application. Please try again. ${error}`);
@@ -50,7 +52,7 @@ import { supabase } from '/supabase-client';
     };
 
     // onSubmit function for UPDATE FORM
-    export const handleUpdateEntrySubmit = async (e, id) => {
+    export const handleUpdateEntrySubmit = async (e, formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage, jobId, setJobId) => {
 
         // Prevent page reload
         e.preventDefault(); 
