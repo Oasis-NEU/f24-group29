@@ -54,62 +54,69 @@ export function CreateEntryForm({formData, setFormData, errorMessage, setErrorMe
     };
 
     return(
+        <div class="form-div">
         <form 
         id="create-entry-form" 
         onSubmit={(e) => handleCreateEntrySubmit(e, formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage, jobId, setJobId)}
         >
             <h1>Create a job entry</h1>
-            <label>Job Title</label>
-                <input 
+            <label class="form-label">Job Title</label>
+                <input
+                class="form-input" 
                 type="text" 
                 name="title" 
                 value={formData.title} 
                 placeholder="Dishwasher" 
                 onChange={handleChange} />
-            <label>Job Company</label>
-                <input 
+            <label class="form-label">Job Company</label>
+                <input
+                class="form-input" 
                 type="text" 
                 name="company" 
                 value={formData.company} 
                 placeholder="Microsoft"
                 onChange={handleChange} />
-            <label>Job Location</label>
-                <input 
+            <label class="form-label">Job Location</label>
+                <input
+                class="form-input" 
                 type="text" 
                 name="location" 
                 value={formData.location} 
                 placeholder="Boston"
                 onChange={handleChange} />
-            <label>Pay (Hourly)</label>
-                <input 
+            <label class="form-label">Pay (Hourly)</label>
+                <input
+                class="form-input" 
                 type="number" 
                 name="payPerHour" 
                 value={formData.payPerHour} 
                 placeholder="$25"
                 onChange={handleChange} />
                 <label>Pay (Salary)</label>
-                <input 
+                <input
+                class="form-input" 
                 type="number" 
                 name="annualPay" 
                 value={formData.annualPay} 
                 placeholder="$75,000"
                 onChange={handleChange} />
-            <label>Job Type</label>
-            <select>
+            <label class="form-label">Job Type</label>
+            <select class="form-input">
                 <option>Full-time</option>
                 <option>Part-time</option>
                 <option>Internship</option>
                 </select>
-            <label>Job Status</label>
-            <select>
+            <label class="form-label">Job Status</label>
+            <select class="form-input">
                 <option>Applied</option>
                 <option>Screening</option>
                 <option>Interviewing</option>
                 <option>Accepted</option>
                 <option>Rejected</option>
                 </select>
-            <label>Job Deadline</label>
-                <input 
+            <label class="form-label">Job Deadline</label>
+                <input
+                class="form-input" 
                 type="date" 
                 name="deadline" 
                 value={formData.deadline}
@@ -118,6 +125,7 @@ export function CreateEntryForm({formData, setFormData, errorMessage, setErrorMe
                 {errorMessage && <p>{errorMessage}</p>}
                 {successMessage && <p>{successMessage}</p>}
         </form>
+        </div>
      )
 };
 
