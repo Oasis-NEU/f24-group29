@@ -2,7 +2,8 @@ import { useState } from'react';
 import { handleCreateEntrySubmit } from '../hooks/fetch-data';
 import { handleUpdateEntrySubmit } from '../hooks/fetch-data';
 
-function Forms() {
+
+export function Forms({applications, setApplications, currentId, setCurrentId}) {
 
     const [formData, setFormData] = useState({
         title: '',
@@ -18,34 +19,30 @@ function Forms() {
     const [errorMessage, setErrorMessage] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
 
-    const [jobId, setJobId] = useState();
-
     return(
         <>
         <CreateEntryForm 
-            formData={formData}
-            setFormData={setFormData}
-            errorMesssage={errorMessage}
-            setErrorMessage={setErrorMessage}
-            successMessage={successMessage}
-            setSuccessMessage={setSuccessMessage}
-            jobId={jobId}
-            setJobId={setJobId} />
-        <UpdateEntryForm 
-            formData={formData}
-            setFormData={setFormData}
-            errorMesssage={errorMessage}
-            setErrorMessage={setErrorMessage}
-            successMessage={successMessage}
-            setSuccessMessage={setSuccessMessage}
-            jobId={jobId}
-            setJobId={setJobId} />
+            applications={applications} setApplications={setApplications}
+            formData={formData} setFormData={setFormData}
+            errorMesssage={errorMessage} setErrorMessage={setErrorMessage}
+            successMessage={successMessage} setSuccessMessage={setSuccessMessage} />
         </>
     )
 }
 
+export function CreateEntryButton() {
 
-export function CreateEntryForm({formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage, jobId, setJobId}) {
+    return(
+        <button id="add-entry-button">Add an entry</button>
+    )
+}
+
+
+export function CreateEntryForm({
+    applications, setApplications, 
+    formData, setFormData, 
+    errorMessage, setErrorMessage, 
+    successMessage, setSuccessMessage}) {
     
     // updates fields when user types in data & on screen
     const handleChange = (e) => {
@@ -54,15 +51,15 @@ export function CreateEntryForm({formData, setFormData, errorMessage, setErrorMe
     };
 
     return(
-        <div class="form-div">
+        <div className="form-div">
         <form 
         id="create-entry-form" 
-        onSubmit={(e) => handleCreateEntrySubmit(e, formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage, jobId, setJobId)}
+        onSubmit={(e) => handleCreateEntrySubmit(e, applications, setApplications, formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage)}
         >
             <h1>Create a job entry</h1>
-            <label class="form-label">Job Title</label>
+            <label className="form-label">Job Title</label>
                 <input
-                class="form-input" 
+                className="form-input" 
                 type="text" 
                 name="title" 
                 value={formData.title} 
@@ -70,7 +67,7 @@ export function CreateEntryForm({formData, setFormData, errorMessage, setErrorMe
                 onChange={handleChange} />
             <label class="form-label">Job Company</label>
                 <input
-                class="form-input" 
+                className="form-input" 
                 type="text" 
                 name="company" 
                 value={formData.company} 
@@ -78,7 +75,7 @@ export function CreateEntryForm({formData, setFormData, errorMessage, setErrorMe
                 onChange={handleChange} />
             <label class="form-label">Job Location</label>
                 <input
-                class="form-input" 
+                className="form-input" 
                 type="text" 
                 name="location" 
                 value={formData.location} 
@@ -86,7 +83,7 @@ export function CreateEntryForm({formData, setFormData, errorMessage, setErrorMe
                 onChange={handleChange} />
             <label class="form-label">Pay (Hourly)</label>
                 <input
-                class="form-input" 
+                className="form-input" 
                 type="number" 
                 name="payPerHour" 
                 value={formData.payPerHour} 
@@ -94,29 +91,36 @@ export function CreateEntryForm({formData, setFormData, errorMessage, setErrorMe
                 onChange={handleChange} />
                 <label>Pay (Salary)</label>
                 <input
-                class="form-input" 
+                className="form-input" 
                 type="number" 
                 name="annualPay" 
                 value={formData.annualPay} 
                 placeholder="$75,000"
                 onChange={handleChange} />
-            <label class="form-label">Job Type</label>
-            <select class="form-input">
+            <label className="form-label">Job Type</label>
+            <select 
+            className="form-input"
+            value={formData.type}
+            onChange={handleChange}
+            >
                 <option>Full-time</option>
                 <option>Part-time</option>
                 <option>Internship</option>
                 </select>
-            <label class="form-label">Job Status</label>
-            <select class="form-input">
+            <label className="form-label">Job Status</label>
+            <select 
+            className="form-input"
+            value={formData.status}
+            onChange={handleChange}>
                 <option>Applied</option>
                 <option>Screening</option>
                 <option>Interviewing</option>
                 <option>Accepted</option>
                 <option>Rejected</option>
                 </select>
-            <label class="form-label">Job Deadline</label>
+            <label className="form-label">Job Deadline</label>
                 <input
-                class="form-input" 
+                className="form-input" 
                 type="date" 
                 name="deadline" 
                 value={formData.deadline}
@@ -131,13 +135,20 @@ export function CreateEntryForm({formData, setFormData, errorMessage, setErrorMe
 
 
 
-export function UpdateEntryForm({formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage, jobId, setJobId}) {
+export function UpdateEntryForm({applications, setApplications, 
+    formData, setFormData, 
+    errorMessage, setErrorMessage, 
+    successMessage, setSuccessMessage}) {
 
 
     return(
         <form 
         id="update-entry-form" 
-        onSubmit={(e) => handleUpdateEntrySubmit(e, formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage, jobId, setJobId)}>
+        onSubmit={(e) => handleUpdateEntrySubmit(e, 
+        applications, setApplications, 
+        formData, setFormData, 
+        errorMessage, setErrorMessage, 
+        successMessage, setSuccessMessage)}>
             <h1>Update Job Entry</h1>
                 <label>Job Title</label>
                     <input 

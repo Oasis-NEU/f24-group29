@@ -5,11 +5,11 @@ import { supabase } from '/supabase-client';
     // 2. use that ID to update specific row in handleUpdateEntrySubmit
     // FORM STATUS: WORKING
 
-    // onSubmit function for CREATE FORM
-    export const handleCreateEntrySubmit = async (e, formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage, jobId, setJobId) => {
+    // Form State, Error/Success Messages, jobId
+    export const handleCreateEntrySubmit = async (e, applications, setApplications, formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage) => {
 
         // Prevent page reload
-        e.preventDefault(); 
+        e.preventDefault();
 
         // Destructure data
         const { title, location, company, type, deadline, payPerHour, status, annualPay } = formData;
@@ -25,7 +25,18 @@ import { supabase } from '/supabase-client';
                     type: type,
                     deadline: deadline,
                     pay_per_hour: payPerHour,
-                    annual_pay: annualPay }]);
+                    annual_pay: annualPay }])
+                    .select();
+
+                    // append new job entry into array of all entries if entry is valid
+                setApplications(prevApps => {
+                    if (data && Array.isArray(prevApps)) {
+                        return [...prevApps, data];
+                    }
+                    return prevApps;
+                });
+
+                console.log(applications);
 
 
             if (error) throw error; // Handle error
@@ -52,7 +63,7 @@ import { supabase } from '/supabase-client';
     };
 
     // onSubmit function for UPDATE FORM
-    export const handleUpdateEntrySubmit = async (e, formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage, jobId, setJobId) => {
+    export const handleUpdateEntrySubmit = async (e, formData, setFormData, errorMessage, setErrorMessage, successMessage, setSuccessMessage) => {
 
         // Prevent page reload
         e.preventDefault(); 

@@ -3,37 +3,26 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import CardWindow from './components/card-window.jsx'
-import { CreateEntryForm } from './components/forms.jsx'
+import { Forms } from './components/forms.jsx'
+
+
 
 function App() {
 
-  const [formData, setFormData] = useState({
-    title: '',
-    company: '',
-    location: '',
-    type: '',
-    deadline: '',
-    payPerHour: '',
-    status: '',
-    annualPay: '',
-});
+  const [applications, setApplications] = useState([]); // array holding all job applciations
 
-const [errorMessage, setErrorMessage] = useState(null);
-const [successMessage, setSuccessMessage] = useState(null);
-
-const [jobId, setJobId] = useState(null);
-
+  const [currentId, setCurrentId] = useState();
+  
   return (
     <>
-     <CreateEntryForm 
-            formData={formData}
-            setFormData={setFormData}
-            errorMesssage={errorMessage}
-            setErrorMessage={setErrorMessage}
-            successMessage={successMessage}
-            setSuccessMessage={setSuccessMessage}
-            jobId={jobId}
-            setJobId={setJobId} />
+    <Forms 
+    applications={applications}
+    setApplications={setApplications}
+    currentId={currentId}
+    setCurrentId={setCurrentId}/>
+     <CardWindow
+     applications={applications}
+     setApplications={setApplications} />
      </>
   )
 }

@@ -2,36 +2,25 @@ import { useState, useEffect } from 'react'
 import { supabase } from '/supabase-client'
 
 
-export default function CardWindow({ jobTitle, jobCompany, jobPay, jobDeadline, jobType, jobStatus, jobLocation, jobDateUpdated }) {
+export default function CardWindow({ applications, setApplications }) {
 
     const [isCardClicked, setIsCardClicked] = useState(false);
 
-        async function fetchJob(appId) {
-            await supabase
-            .from('JobApplications')
-            .select('*')
-            .eq('id', appId)
-            .single()
-        };
-
-        async function updateJob(appId, updatedFields) {
-            await supabase
-            .from('JobApplications')
-            .update(updatedFields)
-            .eq('id', appId)
-            .single()
-        };
+    console.log(`App data: ${applications}`);
 
     return (
         <div id="card-window-parent-container">
-            <Card
-                jobTitle={"Software Engineer"}
-                jobCompany={"Northeastern University"}
-                jobDeadline={"10/25/24"}
-                jobPay={"$45-$61/hr"}
-                jobType={"Internship"}
-                jobStatus={"Applied"}
-                setIsCardClicked={setIsCardClicked} />
+            {applications.map(application => (
+                <Card
+                key={application.id}
+                jobTitle={application.title}
+                jobCompany={application.company}
+                jobLocation={application.location}
+                jobDeadline={application.deadline}
+                jobPay={application.pay}
+                jobType={application.type}
+                jobStatus={application.status}
+                setIsCardClicked={setIsCardClicked} />))}
             <div className="vertical-spacer" />
             {isCardClicked && <JobWindow
                 jobTitle={"Software Engineer"}
